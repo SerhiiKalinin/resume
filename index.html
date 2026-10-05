@@ -128,6 +128,9 @@
 
 .top-actions .theme-button,.top-actions .print-button{display:flex;align-items:center;justify-content:center;box-sizing:border-box;height:40px;min-height:40px}
 .theme-icon{display:grid;place-items:center;width:16px;height:16px;flex:0 0 16px;line-height:1;font-size:16px}
+.theme-icon svg{display:block;width:18px;height:18px;fill:currentColor;stroke:none}
+.theme-icon .sun-icon circle{fill:currentColor}
+.theme-icon .sun-icon path{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
 @media(max-width:760px){.top-actions .theme-button,.top-actions .print-button{width:40px;height:40px;min-height:40px;padding:0;gap:0;font-size:0}.theme-icon,.print-icon{font-size:16px}.print-icon{margin:0}}
 
   </style>
@@ -149,7 +152,7 @@
           <button type="button" data-lang="ru" aria-pressed="false">RU</button>
           <button type="button" data-lang="it" aria-pressed="false">IT</button>
         </nav>
-        <button class="theme-button" type="button" data-action="theme" aria-label="Toggle color theme"><span class="theme-icon" aria-hidden="true">☾</span><span data-i18n="themeAction">Dark</span></button>
+        <button class="theme-button" type="button" data-action="theme" aria-label="Toggle color theme"><span class="theme-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20.2 15.1A8.6 8.6 0 0 1 8.9 3.8 8.7 8.7 0 1 0 20.2 15.1Z"/></svg></span><span data-i18n="themeAction">Dark</span></button>
         <button class="print-button" type="button" data-action="print"><span class="print-icon" aria-hidden="true">↗</span><span data-i18n="print">Print / PDF</span></button>
       </div>
     </header>
@@ -290,7 +293,9 @@ function updateThemeLabel(data) {
   const label = document.querySelector('[data-action="theme"] [data-i18n="themeAction"]');
   if (label) label.textContent = dark ? ({en:"Light",ru:"Светлая",uk:"Світла",it:"Chiara"}[document.documentElement.lang] || "Light") : data.themeAction;
   const icon = document.querySelector(".theme-icon");
-  if (icon) icon.textContent = dark ? "☀" : "☾";
+  if (icon) icon.innerHTML = dark
+    ? '<svg class="sun-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/></svg>'
+    : '<svg viewBox="0 0 24 24"><path d="M20.2 15.1A8.6 8.6 0 0 1 8.9 3.8 8.7 8.7 0 1 0 20.2 15.1Z"/></svg>';
   const button = document.querySelector('[data-action="theme"]');
   if (button) button.setAttribute("aria-label", label ? label.textContent : "Toggle color theme");
 }
